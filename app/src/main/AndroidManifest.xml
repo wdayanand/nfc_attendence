@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.eno.attendence">
+
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/pl"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AddEmployeeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".NfcReaderActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/reader">
+
+            <!-- open any tag with ndef content -->
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
+
+            <!-- see also http://stackoverflow.com/questions/7114297/how-specify-mimetype-for-read-nfc-tag-with-url -->
+
+        </activity>
+        <activity
+
+            android:name=".NfcBeamWriterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/beamer"></activity>
+
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="attendance.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.eno.attendence.modules.Employee,com.eno.attendence.modules.EmpEntry" />
+
+        <provider
+            android:name=".database.DatabaseContentProvider"
+            android:authorities="com.eno.attendence"
+            android:exported="false" />
+    </application>
+
+</manifest>
